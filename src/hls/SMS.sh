@@ -11,18 +11,19 @@ VALID_PICKLE_NAME=$8
 U_PICKLE_NAME=$9
 GAMMA=${10}
 LAMDA=${11}
-USE_JOINT_f_w=${12} #this flag should be True if you need to use output of rule network while doing inference (See eqn6 in the paper)
+USE_JOINT_f_w=${12}
 
-DATA_DIR=../../data/TREC
+
+DATA_DIR=../../data/SMS
 
 
 
 W_LAYERS="512,512"
 F_LAYERS="512,512"
 
-F_D_CLASS_SAMPLING=10,10,10,10,10,10 # while mixing d and U sets, oversample data from d 10 times
-                                     # this is because size of d is just 68
-                                     # while size of U is ~ 4.6k
+F_D_CLASS_SAMPLING=3,3 # while mixing d and U sets, oversample data from d
+                                     # this is because size of d is much smaller
+                                     # than size of U
                                      # this is done so that in any batch there are enough instances from "d"
                                      # along with instances from U
 
@@ -31,7 +32,7 @@ python3.6 -u main.py \
   --run_mode=$MODE \
   --checkpoint_load_mode=$CKPT_LOAD_MODE \
   --data_dir=$DATA_DIR \
-  --f_d_primary_metric=accuracy \
+  --f_d_primary_metric=f1_score_1 \
   --f_d_epochs=$EPOCHS \
   --f_d_U_epochs=$EPOCHS \
   --f_d_batch_size=16 \
