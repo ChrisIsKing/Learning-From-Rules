@@ -153,3 +153,5 @@ bld/
 venv
 .vscode
 logs
+*.p
+*/outputs/*

@@ -46,14 +46,15 @@ class Generate_data:
         m = np.zeros(self.num_rules)
         l = self.num_labels + np.zeros(self.num_rules)
 
-        for rid, ruleset in enumerate(self.rules):
-            # pattern = re.compile(pat)
-            rule = ruleset[0]
-            rule_label = 1
-            result = int(self.rule_check(sentence,rule))                   
+        for rid,(rule,exemplar,label) in enumerate(self.rules):
+            rule_label = LABEL_DICT[label]
+            if rule_label == 1:
+                result = int(self.rule_check(sentence,rule))
+            elif rule_label == 0:
+                result = int(not self.rule_check(sentence,rule))
             if result:
                 m[rid] = 1
-                l[rid] = 1
+                l[rid] = rule_label
         return m,l
 
 
@@ -108,10 +109,7 @@ class Generate_data:
         d_L = [] # true labels
         d_d = [] # 1 if instance is from labelled data (rules)
         d_r = []
-        label = 1 # all rules trigger label 1
-        for rule_id,ruleset in enumerate(self.rules):
-            rule = ruleset[0]
-            sentence = ruleset[1]
+        for rule_id,(rule, sentence, label) in enumerate(self.rules):
             if sentence in d_x:
                 s_idx = d_x.index(sentence)
                 if label == d_L[s_idx]:
@@ -119,7 +117,7 @@ class Generate_data:
                     continue
             d_x.append(sentence)
             d_d.append(1)
-            d_L.append(label)
+            d_L.append(LABEL_DICT[label])
             m = np.zeros(self.num_rules)
             l = self.num_labels + np.zeros(self.num_rules)
             r = np.zeros(self.num_rules)
