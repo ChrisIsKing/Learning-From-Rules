@@ -27,7 +27,7 @@ F_D_CLASS_SAMPLING=3,3 # while mixing d and U sets, oversample data from d
                                      # this is done so that in any batch there are enough instances from "d"
                                      # along with instances from U
 
-python3.6 -u main.py \
+python -u main.py \
   --output_dir="$DATA_DIR"/outputs/"$OUTPUT_DIR" \
   --run_mode=$MODE \
   --checkpoint_load_mode=$CKPT_LOAD_MODE \

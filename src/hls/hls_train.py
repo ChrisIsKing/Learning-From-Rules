@@ -10,8 +10,8 @@ import pickle
 import sys,os
 from sklearn.metrics import precision_recall_fscore_support
 
-from snorkel.labeling import LabelModel
-from snorkel.labeling import MajorityLabelVoter
+# from snorkel.labeling import LabelModel
+# from snorkel.labeling import MajorityLabelVoter
 from sklearn.metrics import precision_recall_fscore_support
 from snorkel_utils import conv_l_to_lsnork
 
@@ -26,7 +26,7 @@ class HLSTrain():
 
     def make_f_summary_ops(self):
         with tf.name_scope('f_summaries'):
-            self.f_d_loss_ph = tf.placeholder(tf.float32, shape=None, name='f_d_loss_placeholder')
+            self.f_d_loss_ph = tf.compat.v1.placeholder(tf.float32, shape=None, name='f_d_loss_placeholder')
             self.f_d_loss = tf.summary.scalar('f_d_loss', self.f_d_loss_ph)
 
             self.f_d_f1_score_ph = tf.placeholder(tf.float32, shape=None, name='f_d_f1_score_placeholder')

@@ -1,0 +1,32 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 2 files
+Detected 0 issues that require attention
+--------------------------------------------------------------------------------
+================================================================================
+Detailed log follows:
+
+================================================================================
+================================================================================
+Input tree: 'data/SMS/'
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'data/SMS/generate_data.py'
+ outputting to 'data/SMS_V2/generate_data.py'
+--------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+Processing file 'data/SMS/obtain_embeddings.py'
+ outputting to 'data/SMS_V2/obtain_embeddings.py'
+--------------------------------------------------------------------------------
+
+18:2: INFO: Renamed 'tf.logging.set_verbosity' to 'tf.compat.v1.logging.set_verbosity'
+18:27: INFO: Renamed 'tf.logging.ERROR' to 'tf.compat.v1.logging.ERROR'
+19:7: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+20:17: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+20:52: INFO: Renamed 'tf.tables_initializer' to 'tf.compat.v1.tables_initializer'
+--------------------------------------------------------------------------------
+

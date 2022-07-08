@@ -6,7 +6,7 @@ import pickle
 import re
 import os
 
-from obtain_embeddings import sentences_to_elmo_sentence_embs
+from obtain_embeddings import sentences_to_elmo_sentence_embs, sentences_to_elmo_sentence_embs_2
 
 LABEL_DICT = {"ham": 0, "spam": 1}
 
@@ -89,7 +89,7 @@ class Generate_data:
             for sentence in xx:
                 txt_f.write(sentence.strip()+'\n')
             print(len(xx))
-            xx = sentences_to_elmo_sentence_embs(xx)
+            xx = sentences_to_elmo_sentence_embs_2(xx)
             print(len(xx))
             pickle.dump(np.array(xx),pkl_f)
             pickle.dump(np.array(xl),pkl_f)
@@ -100,20 +100,20 @@ class Generate_data:
 
     def generate_pickles(self):
         #=== d_processed.p ====#
-        d_x = []
-        d_l = []
-        d_m = []
-        d_L = []
-        d_d = []
+        d_x = [] # exemplars instances
+        d_l = [] # rule labels
+        d_m = [] # rule coverage mask
+        d_L = [] # true labels
+        d_d = [] # 1 if instance is from labelled data (rules)
         d_r = []
         for rule_id,(sentence,label,pattern) in enumerate(self.rules):
-            if sentence in d_x:
+            if sentence in d_x: # if exemplar applies to more than one rule
                 s_idx = d_x.index(sentence)
-                if label == d_L[s_idx]:
+                if label == d_L[s_idx]: # rule label triggers the same label as next rule for the same exemplar
                     d_r[s_idx][rule_id]=1
                     continue
             d_x.append(sentence)
-            d_d.append(1)
+            d_d.append(1) 
             d_L.append(label)
             m = np.zeros(self.num_rules)
             l = self.num_labels + np.zeros(self.num_rules)
@@ -128,7 +128,7 @@ class Generate_data:
             for sentence in d_x:
                 txt_f.write(sentence.strip()+'\n')
             print(len(d_x))
-            d_x = sentences_to_elmo_sentence_embs(d_x)
+            d_x = sentences_to_elmo_sentence_embs_2(d_x)
             print(len(d_x))
             pickle.dump(np.array(d_x), pkl_f)
             pickle.dump(np.array(d_l), pkl_f)
