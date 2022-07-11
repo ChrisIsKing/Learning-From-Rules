@@ -155,3 +155,4 @@ venv
 logs
 *.p
 */outputs/*
+outputs
