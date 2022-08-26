@@ -114,23 +114,43 @@ class Generate_data:
         d_d = [] # 1 if instance is from labelled data (rules)
         d_r = []
         for rule_id,(rule, sentence, label) in enumerate(self.rules):
-            if sentence in d_x:
-                s_idx = d_x.index(sentence)
-                if label == d_L[s_idx]:
-                    d_r[s_idx][rule_id]=1
-                    continue
-            d_x.append(sentence)
-            d_d.append(1)
-            d_L.append(LABEL_DICT[label])
-            m = np.zeros(self.num_rules)
-            l = self.num_labels + np.zeros(self.num_rules)
-            r = np.zeros(self.num_rules)
-            r[rule_id] = 1
-            d_r.append(r)
-            m,l = self.fire_rules(sentence)
-            assert m[rule_id] == 1
-            d_m.append(m)
-            d_l.append(l)
+            if rule == "neg_rule":
+                for instance in sentence:
+                    if instance in d_x:
+                        s_idx = d_x.index(instance)
+                        if label == d_L[s_idx]:
+                            d_r[s_idx][rule_id]=1
+                            continue
+                    d_x.append(instance)
+                    d_d.append(1)
+                    d_L.append(0)
+                    m = np.zeros(self.num_rules)
+                    l = self.num_labels + np.zeros(self.num_rules)
+                    r = np.zeros(self.num_rules)
+                    r[rule_id] = 1
+                    m,l = self.fire_rules(instance)
+                    assert m[rule_id] == 1
+                    d_m.append(m)
+                    d_l.append(l)
+
+            else:
+                if sentence in d_x:
+                    s_idx = d_x.index(sentence)
+                    if label == d_L[s_idx]:
+                        d_r[s_idx][rule_id]=1
+                        continue
+                d_x.append(sentence)
+                d_d.append(1)
+                d_L.append(LABEL_DICT[label])
+                m = np.zeros(self.num_rules)
+                l = self.num_labels + np.zeros(self.num_rules)
+                r = np.zeros(self.num_rules)
+                r[rule_id] = 1
+                d_r.append(r)
+                m,l = self.fire_rules(sentence)
+                assert m[rule_id] == 1
+                d_m.append(m)
+                d_l.append(l)
         with open("d_processed.p", "wb") as pkl_f, open("d_sentences.txt","w") as txt_f:
             for sentence in d_x:
                 txt_f.write(sentence.strip()+'\n')

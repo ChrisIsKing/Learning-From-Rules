@@ -24,7 +24,7 @@ def load_data(fname, num_load=None):
         assert len(m) == len_x
         assert len(L) == len_x
         assert len(d) == len_x
-        assert len(r) == len_x
+        # assert len(r) == len_x
 
         L = np.reshape(L, (L.shape[0], 1))
         d = np.reshape(d, (d.shape[0], 1))

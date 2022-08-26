@@ -47,15 +47,11 @@ class Generate_data:
         l = self.num_labels + np.zeros(self.num_rules)
 
         for rid,(rule,exemplar,label) in enumerate(self.rules):
-            if rule == "neg_rule":
-                rule_label = 0
-                result = not any([self.rule_check(sentence, rule[0]) for rule in self.rules[:-2]])
-            else:
-                rule_label = LABEL_DICT[label]
-                if rule_label == 1:
-                    result = int(self.rule_check(sentence,rule))
-                elif rule_label == 0:
-                    result = int(not self.rule_check(sentence,rule))
+            rule_label = LABEL_DICT[label]
+            if rule_label == 1:
+                result = int(self.rule_check(sentence,rule))
+            elif rule_label == 0:
+                result = int(not self.rule_check(sentence,rule))
             if result:
                 m[rid] = 1
                 l[rid] = rule_label

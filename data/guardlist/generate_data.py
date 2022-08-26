@@ -11,7 +11,7 @@ from obtain_embeddings import sentences_to_elmo_sentence_embs
 LABEL_DICT = {"offensive": 1, "hatespeech": 1, "normal": 0}
 
 def load_data(mode):
-    data = pd.read_csv(mode + ".csv", encoding='latin1', delimiter='\t')
+    data = pd.read_csv(mode + ".csv", encoding='latin1', delimiter=',')
     sentence = [x.lower().strip() for x in data["text"].tolist()]
     label = [LABEL_DICT[item] for item in data["label"].tolist()]
     data = list(zip(sentence, label))
